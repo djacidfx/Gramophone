@@ -17,12 +17,19 @@
 
 package org.akanework.gramophone.ui
 
+import android.annotation.SuppressLint
 import android.app.NotificationManager
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.view.Choreographer
+import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
@@ -45,13 +52,15 @@ import coil3.imageLoader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.akanework.gramophone.BuildConfig
 import org.akanework.gramophone.R
 import org.akanework.gramophone.logic.enableEdgeToEdgeProperly
+import org.akanework.gramophone.logic.gramophoneApplication
 import org.akanework.gramophone.logic.hasScopedStorageV2
 import org.akanework.gramophone.logic.hasScopedStorageWithMediaTypes
 import org.akanework.gramophone.logic.needsMissingOnDestroyCallWorkarounds
 import org.akanework.gramophone.logic.postAtFrontOfQueueAsync
-import org.akanework.gramophone.logic.utils.MediaStoreUtils.updateLibraryWithInCoroutine
 import org.akanework.gramophone.ui.components.PlayerBottomSheet
 import org.akanework.gramophone.ui.fragments.BaseFragment
 
@@ -70,7 +79,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Import our viewModels.
-    private val libraryViewModel: LibraryViewModel by viewModels()
+    val controllerViewModel: MediaControllerViewModel by viewModels()
     val startingActivity =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
 
@@ -82,17 +91,13 @@ class MainActivity : AppCompatActivity() {
         private set
     lateinit var intentSender: ActivityResultLauncher<IntentSenderRequest>
         private set
-    var intentSenderAction: (() -> Boolean)? = null
 
-    /**
-     * updateLibrary:
-     *   Calls [updateLibraryWithInCoroutine] in MediaStoreUtils and updates library.
-     */
     fun updateLibrary(then: (() -> Unit)? = null) {
         // If library load takes more than 3s, exit splash to avoid ANR
         if (!ready) handler.postDelayed(reportFullyDrawnRunnable, 3000)
         CoroutineScope(Dispatchers.Default).launch {
-            updateLibraryWithInCoroutine(libraryViewModel, this@MainActivity) {
+            this@MainActivity.gramophoneApplication.reader.refresh()
+            withContext(Dispatchers.Main) {
                 if (!ready) reportFullyDrawn()
                 then?.let { it() }
             }
@@ -105,19 +110,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen().setKeepOnScreenCondition { !ready }
         super.onCreate(savedInstanceState)
+        lifecycle.addObserver(controllerViewModel)
         enableEdgeToEdgeProperly()
         autoPlay = intent?.extras?.getBoolean(PLAYBACK_AUTO_START_FOR_FGS, false) == true
-        intentSender = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
-            if (it.resultCode == RESULT_OK) {
-                if (intentSenderAction != null) {
-                    intentSenderAction!!()
-                } else {
-                    Toast.makeText(this, getString(
-                        R.string.delete_in_progress), Toast.LENGTH_LONG).show()
-                }
-            }
-            intentSenderAction = null
-        }
+        intentSender =
+            registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {}
 
         supportFragmentManager.registerFragmentLifecycleCallbacks(object :
             FragmentLifecycleCallbacks() {
@@ -134,6 +131,15 @@ class MainActivity : AppCompatActivity() {
 
         // Set content Views.
         setContentView(R.layout.activity_main)
+        if (BuildConfig.DEBUG) {
+            @SuppressLint("SetTextI18n")
+            findViewById<ViewGroup>(R.id.rootView).addView(TextView(this).apply {
+                text = "DEBUG"
+                setTextColor(Color.RED)
+                translationZ = 9999999f
+                translationX = 50f
+            })
+        }
         playerBottomSheet = findViewById(R.id.player_layout)
         val container = findViewById<FragmentContainerView>(R.id.container)
         // Modifies FragmentContainerView's insets to account for bottom sheet size.
@@ -174,7 +180,7 @@ class MainActivity : AppCompatActivity() {
             )
         } else {
             // If all permissions are granted, we can update library now.
-            if (libraryViewModel.mediaItemList.value == null) {
+            if (this@MainActivity.gramophoneApplication.reader.songListFlow.replayCache.isEmpty()) {
                 updateLibrary()
             } else reportFullyDrawn() // <-- when recreating activity due to rotation
         }
@@ -210,7 +216,11 @@ class MainActivity : AppCompatActivity() {
                 updateLibrary()
             } else {
                 reportFullyDrawn()
-                // TODO: Show a prompt here
+                Toast.makeText(this, getString(R.string.grant_audio), Toast.LENGTH_LONG).show()
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                intent.setData(Uri.parse("package:$packageName"))
+                startActivity(intent)
+                finish()
             }
         }
     }
@@ -235,7 +245,8 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         // https://github.com/androidx/media/issues/805
         if (needsMissingOnDestroyCallWorkarounds()
-            && (getPlayer()?.playWhenReady != true || getPlayer()?.mediaItemCount == 0)) {
+            && (getPlayer()?.playWhenReady != true || getPlayer()?.mediaItemCount == 0)
+        ) {
             val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             nm.cancel(DefaultMediaNotificationProvider.DEFAULT_NOTIFICATION_ID)
         }
@@ -249,9 +260,12 @@ class MainActivity : AppCompatActivity() {
      * getPlayer:
      *   Returns a media controller.
      */
-    fun getPlayer() = playerBottomSheet.getPlayer()
+    fun getPlayer() = controllerViewModel.get()
 
     fun consumeAutoPlay(): Boolean {
         return autoPlay.also { autoPlay = false }
     }
+
+    inline val reader
+        get() = gramophoneApplication.reader
 }

@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="dismiss">Fermer</string>
-    <string name="categories">Catégories</string>
     <string name="settings_category_behavior">Comportement</string>
-    <string name="operations">Opérations</string>
     <string name="go_to_album">Voir l’album</string>
     <string name="category_dates">Dates</string>
     <string name="sort_by_size">Taille</string>
     <string name="dialog_title">Titre</string>
     <string name="settings_repository">Dépôt</string>
     <string name="sort_by_artist">Artiste</string>
-    <string name="settings_mediastore_filter">Cacher les chansons plus courtes que (en secondes) :</string>
+    <string name="settings_mediastore_filter">Durée minimale des chansons (en secondes)</string>
     <string name="category_songs">Chansons</string>
     <string name="settings_app_theme">Thème de l’appli</string>
     <string name="compact_list">Liste (compacte)</string>
@@ -21,7 +19,6 @@
         <item quantity="many">%d éléments</item>
         <item quantity="other">%d éléments</item>
     </plurals>
-    <string name="home_menu_shuffle">Aléatoire</string>
     <string name="category_genres">Genres</string>
     <string name="natural_order">Ordre naturel</string>
     <string name="light">Clair</string>
@@ -85,7 +82,6 @@
 \nCopyright © 2024 Akane Foundation</string>
     <string name="playlist_favourite">Favori</string>
     <string name="settings_default_progress_bar">Barre de progression par défaut</string>
-    <string name="home_menu_about">À propos</string>
     <string name="now_playing">Lecture en cours</string>
     <string name="settings_default_progress_bar_summary">Activer la barre de progression Material design</string>
     <string name="settings_album_round_corner">Coins d\'albums arrondis</string>
@@ -96,7 +92,6 @@
     <string name="sort_by_modified_date">Date de modification</string>
     <string name="settings_hardware_acceleration_summary">Activer l\'accélération matérielle pour la vitesse de lecture</string>
     <string name="settings_player_ui">Interface du lecteur</string>
-    <string name="disc">Disque</string>
     <string name="settings_behavior_summary">Filtres, paramètres de démarrage</string>
     <string name="settings_about_gramophone">À propos de l\'application</string>
     <string name="settings_customization_summary">Gérer les paramètres de personnalisation</string>
@@ -111,7 +106,7 @@
     <string name="settings_content_based_color">Couleurs basées sur le contenu</string>
     <string name="settings_title_bold_summary">Mettre le titre en gras dans le lecteur complet</string>
     <string name="unknown_title">Titre inconnu</string>
-    <string name="dialog_mime">Type Mime</string>
+    <string name="dialog_mime">Type MIME</string>
     <string name="settings_player_options">Audio</string>
     <string name="settings_lyric">Paroles</string>
     <string name="settings_category_links">Liens</string>
@@ -142,9 +137,6 @@
     <string name="settings_blacklist">Liste d\'exclusion</string>
     <string name="settings_blacklist_folder">Exclure des dossiers</string>
     <string name="settings_blacklist_folder_summary">Filtre les morceaux de certains dossiers</string>
-    <string name="delete_in_progress">Déjà en train de supprimer une autre musique</string>
-    <string name="no">Non</string>
-    <string name="delete">Supprimer</string>
     <string name="delete_failed">Échec de la suppression</string>
     <string name="settings_crash_application">Faire planter l\'application</string>
     <string name="album_cover">Pochette d\'album</string>
@@ -156,10 +148,53 @@
     <string name="settings_category_misc">Autres</string>
     <string name="preference_category_quality">Qualité</string>
     <string name="settings_crash_application_summary">Crash-O-Matic 3000</string>
-    <string name="yes">Oui</string>
-    <string name="deny_images">Veuillez refuser la permission « Images et vidéos »</string>
-    <string name="grant_images">Veuillez accepter la permission « Images et vidéos »</string>
+    <string name="deny_images"><![CDATA[Veuillez refuser l\'autorisation \"Photos and videos\" ]]></string>
+    <string name="grant_images"><![CDATA[Veuillez accorder l\'autorisation \"Photos and videos\"]]></string>
     <string name="crash_clipboard">Journal de plantage copié</string>
     <string name="settings_category_full_player">Lecteur complet</string>
     <string name="settings_trim_lyrics">Enlever les espaces autour des paroles</string>
+    <string name="settings_lyrics_multiline">Lire les paroles multi-lignes</string>
+    <string name="sort_by_release_date">Date de publication</string>
+    <string name="timer_expiry">Le minuteur de sommeil arrêtera la musique à %s</string>
+    <string name="album_covers_enhance">Chargement amélioré des couvertures d\'albums</string>
+    <string name="share">Partager</string>
+    <string name="settings_lyrics_multiline_summary">Traiter toutes les lignes entre les points de synchronisation comme une seule parole</string>
+    <string name="album_covers_enhance_desc">Permet d\'utiliser des couvertures de chanson de haute qualité et d\'avoir des couvertures d\'albums et de chansons différentes (nécessite la permission d\'accès aux photos)</string>
+    <string name="fgs_failed_title">Échec de la reprise de la lecture</string>
+    <string name="timer">Minuteur de sommeil</string>
+    <string name="current_playlist">Playlist actuelle</string>
+    <string name="fgs_failed_text">Cliquez ici pour ouvrir l\'application et continuer la lecture</string>
+    <string name="fgs_failed_channel">La reprise de la lecture a échoué</string>
+    <string name="separator_dot">•</string>
+    <string name="home_menu_shuffle">Jouer aléatoirement</string>
+    <string name="app_name">Gramophone</string>
+    <string name="lyric_widget_description">Widget qui affiche les paroles des médias joués</string>
+    <string name="settings_preference_category_home">Écran d\'accueil</string>
+    <string name="position_slider">Position du défilement</string>
+    <string name="skip_next">Passer au prochain</string>
+    <string name="expand_less">Fermer</string>
+    <string name="skip_previous">Aller au précédent</string>
+    <string name="tab_order">Configurer l\'ordre des onglets</string>
+    <string name="seekbar">Barre de recherche</string>
+    <string name="divider">Séparateur</string>
+    <string name="tab_order_summary">L\'application affichera le premier onglet au démarrage. Les onglets après le séparateur seront cachés.</string>
+    <string name="back">Retour</string>
+    <string name="shuffle_all">Jouer aléatoirement</string>
+    <string name="sort">Trier</string>
+    <string name="scroll_to_albums">Aller aux albums</string>
+    <string name="play">Jouer</string>
+    <string name="settings_lyrics_parser">Nouvel analyseur des paroles</string>
+    <string name="settings_lyrics_parser_summary">Activer le nouvel analyseur de paroles qui prend en charge la synchronisation mot par mot, indicateur de haut-parleur, décalage et plus</string>
+    <string name="settings_lyrics_ui">Activer la nouvelle interface paroles</string>
+    <string name="settings_status_bar_lyrics_title">Barre d\'état des paroles</string>
+    <string name="settings_status_bar_lyrics_summary">Activer la méthode MeiZu d\'affichage des paroles dans la barre d\'état (seulement disponible sur certains appareils)</string>
+    <string name="delete">Supprimer</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="grant_audio"><![CDATA[Veuillez accorder l\'autorisation \"Music and audio\"]]></string>
+    <string name="play_all">Tout jouer</string>
+    <string name="remove">Retirer</string>
+    <string name="scroll_to_songs">Aller aux chansons</string>
+    <string name="more">Plus</string>
+    <string name="settings_lyrics_ui_summary">Interface utilisateur expérimentale pour afficher le mot par mot des paroles avec des fonctionnalités avancées</string>
 </resources>
