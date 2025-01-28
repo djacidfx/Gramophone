@@ -16,26 +16,25 @@
     <plurals name="albums">
         <item quantity="one">%d Album</item>
         <item quantity="few">%d Alba</item>
+        <item quantity="many">%d Alb</item>
         <item quantity="other">%d Alb</item>
     </plurals>
     <string name="dark">Tmavý</string>
     <plurals name="artists">
         <item quantity="one">%d Interpret</item>
         <item quantity="few">%d Interpreti</item>
+        <item quantity="many">%d Interpretů</item>
         <item quantity="other">%d Interpretů</item>
     </plurals>
     <string name="sort_by_artist">Interpretů</string>
-    <string name="categories">Kategorie</string>
     <string name="dismiss">Zrušit</string>
     <string name="settings_app_name">Název aplikace</string>
     <string name="details">Detaily</string>
     <string name="settings_category_appearance">Vzhled</string>
     <string name="settings_category_behavior">Chování</string>
-    <string name="home_menu_about">O aplikaci</string>
     <string name="check_for_updates">Podívejte se na náš kanál pro aktualizace!</string>
     <string name="settings_default_progress_bar">Výchozí ukazatel průběhu</string>
     <string name="dialog_disc_number">Čislo disku</string>
-    <string name="disc">Disk</string>
     <string name="settings_album_round_corner">Zaoblení rohu alba</string>
     <string name="settings_audio">Zvuk</string>
     <string name="settings_lyrics_configuration_summary">Konfigurujte vzhed textů skladeb</string>
@@ -45,10 +44,8 @@
     <string name="settings_preference_category_application">Aplikace</string>
     <string name="settings_category_basic_info">Základní informace</string>
     <string name="settings_blacklist_folder">Složky černé listiny</string>
-    <string name="delete">Smazat</string>
     <string name="delete_failed">Smazání skladby selhalo</string>
-    <string name="delete_in_progress">Právě se maže jiná skladba</string>
-    <string name="settings_about_app">O aplikaci</string>
+	<string name="settings_about_app">O aplikaci</string>
     <string name="settings_about_gramophone">Informace o aplikace</string>
     <string name="sort_by_add_date">Datum přidání</string>
     <string name="sort_by_album">Alba</string>
@@ -61,6 +58,7 @@
     <plurals name="songs">
         <item quantity="one">%d Skladba</item>
         <item quantity="few">%d Skladby</item>
+        <item quantity="many">%d Skladeb</item>
         <item quantity="other">%d Skladeb</item>
     </plurals>
     <string name="equalizer_not_found">Nebyl nalezen žádný ekvalizér</string>
@@ -72,6 +70,7 @@
     <plurals name="items">
         <item quantity="one">%d Položka</item>
         <item quantity="few">%d Položky</item>
+        <item quantity="many">%d Položek</item>
         <item quantity="other">%d Položek</item>
     </plurals>
     <string name="dialog_duration">Trvání</string>
